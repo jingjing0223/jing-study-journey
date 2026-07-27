@@ -13,7 +13,7 @@
     .focus{border-left:5px solid #e49b25;background:#fffaf0}.focus h2{font-size:20px}.hint{font-size:13px;color:#8a6a32;margin:4px 0 10px}
     form{display:flex;gap:8px}input,textarea,button{font:inherit}input,textarea{width:100%;border:1px solid #d1d5db;border-radius:6px;padding:10px 12px;min-width:0}input{flex:1}textarea{resize:vertical;min-height:76px}button{border:0;border-radius:6px;padding:10px 14px;cursor:pointer;background:#176b57;color:#fff}button:hover{background:#125542}.muted{background:#eef2f1;color:#176b57}
     ul{padding:0;margin:0;list-style:none}.task{display:flex;align-items:center;gap:8px;padding:12px 0;border-top:1px solid #eef0f2}.task:first-child{border-top:0}.task span{flex:1}.done{text-decoration:line-through;color:#9ca3af}.checkin.done-btn{background:#eef2f1;color:#176b57}.delete{background:transparent;color:#9ca3af;padding:5px 8px}.delete:hover{background:#f3f4f6;color:#b42318}.empty{text-align:center;padding:18px;color:#9ca3af;font-size:14px}
-    .progress{height:8px;background:#e5e7eb;border-radius:8px;overflow:hidden}.progress i{display:block;height:100%;background:#176b57;transition:width .2s}.rating{display:flex;gap:8px;margin:8px 0 14px}.rating button{background:#f0f2f3;color:#4b5563;flex:1;padding:8px}.rating button.active{background:#176b57;color:#fff}.save-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:10px}.saved{font-size:13px;color:#176b57}.countdown{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}.countdown strong{font-size:32px;color:#b45309}.field label{display:block;font-size:13px;color:#6b7280;margin-bottom:5px}.footer{text-align:center;color:#9ca3af;font-size:12px;margin-top:22px}
+    .progress{height:8px;background:#e5e7eb;border-radius:8px;overflow:hidden}.progress i{display:block;height:100%;background:#176b57;transition:width .2s}.rating,.moods{display:flex;gap:8px;margin:8px 0 14px}.rating button,.moods button{background:#f0f2f3;color:#4b5563;flex:1;padding:8px}.rating button.active,.moods button.active{background:#176b57;color:#fff}.save-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:10px}.saved{font-size:13px;color:#176b57}.countdown{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}.countdown strong{font-size:32px;color:#b45309}.field label{display:block;font-size:13px;color:#6b7280;margin-bottom:5px}.vent{border-left:5px solid #73839b}.vent .privacy{font-size:13px;color:#6b7280;margin:4px 0 10px}.clear{background:#f3f4f6;color:#6b7280}.clear:hover{background:#e5e7eb;color:#b42318}.footer{text-align:center;color:#9ca3af;font-size:12px;margin-top:22px}
     @media(max-width:500px){.summary{grid-template-columns:1fr 1fr}.summary .stat:last-child{grid-column:span 2}header{display:block}.date{text-align:left;margin-top:6px}form{flex-direction:column}form button{width:100%}.task button{padding:8px 10px}}
   </style>
 </head>
@@ -26,16 +26,17 @@
     <section class="panel"><div class="panel-title"><h2>添加今日任务</h2></div><form id="taskForm"><input id="taskInput" maxlength="60" placeholder="例如：背英语单词 30 分钟" required><button>添加任务</button></form></section>
     <section class="panel"><div class="panel-title"><h2>今日计划</h2><span id="percent" class="muted" style="padding:4px 8px;font-size:13px">0%</span></div><div class="progress"><i id="bar" style="width:0%"></i></div><ul id="tasks"></ul></section>
     <section class="panel"><div class="panel-title"><h2>今日收获</h2></div><textarea id="harvest" maxlength="200" placeholder="今天真正学会了什么？写下一条就够了。"></textarea><div class="save-row"><span class="saved" id="harvestSaved"></span><button id="saveHarvest">保存收获</button></div></section>
+    <section class="panel vent"><div class="panel-title"><h2>倾诉角</h2></div><p class="privacy">把烦心的人和事写在这里。内容只保存在当前浏览器，不会公开。</p><div class="moods" id="moods"><button data-mood="生气">生气</button><button data-mood="委屈">委屈</button><button data-mood="疲惫">疲惫</button><button data-mood="释然">释然</button></div><textarea id="ventText" maxlength="1000" placeholder="不用组织语言，真实写下来就好……"></textarea><div class="save-row"><span class="saved" id="ventSaved"></span><button class="clear" id="clearVent">清空</button><button id="saveVent">写完，先放下</button></div></section>
     <section class="panel"><div class="panel-title"><h2>今天的学习效率与感受</h2></div><p>效率评分</p><div class="rating" id="rating"><button data-score="1">1</button><button data-score="2">2</button><button data-score="3">3</button><button data-score="4">4</button><button data-score="5">5</button></div><textarea id="reflection" maxlength="300" placeholder="今天哪里做得好？哪里被卡住？明天准备怎么调整？"></textarea><div class="save-row"><span class="saved" id="reflectionSaved"></span><button id="saveReflection">保存复盘</button></div></section>
     <div class="footer">数据只保存在当前浏览器中 · 适合作为 MVP 继续改造</div>
   </main>
   <script>
     const KEY='study-mvp-v1', todayKey=()=>new Date().toISOString().slice(0,10);
     let data=JSON.parse(localStorage.getItem(KEY)||'{"tasks":{},"doneDates":[]}');
-    const today=todayKey(); data.tasks[today]??=[];data.daily??={};data.daily[today]??={focus:'',score:0,reflection:'',harvest:''};data.examDate??='';
+    const today=todayKey(); data.tasks[today]??=[];data.daily??={};data.daily[today]??={focus:'',score:0,reflection:'',harvest:'',mood:'',vent:''};data.examDate??='';
     const $=id=>document.getElementById(id);
     $('today').textContent=new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
-    $('focusInput').value=data.daily[today].focus;$('reflection').value=data.daily[today].reflection;$('harvest').value=data.daily[today].harvest||'';$('examDate').value=data.examDate;
+    $('focusInput').value=data.daily[today].focus;$('reflection').value=data.daily[today].reflection;$('harvest').value=data.daily[today].harvest||'';$('ventText').value=data.daily[today].vent||'';$('examDate').value=data.examDate;
     function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
     function streak(){let n=0,d=new Date();while(data.doneDates.includes(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}return n}
     function render(){const list=data.tasks[today], finished=list.filter(x=>x.done).length, pct=list.length?Math.round(finished/list.length*100):0;
@@ -49,10 +50,14 @@
     function showCountdown(){if(!data.examDate){$('daysLeft').textContent='未设置';$('daysUnit').textContent='';return}const left=Math.ceil((new Date(data.examDate+'T00:00:00')-new Date())/86400000);$('daysLeft').textContent=Math.max(0,left);$('daysUnit').textContent=' 天'}
     $('examDate').onchange=e=>{data.examDate=e.target.value;save();showCountdown()};
     $('saveHarvest').onclick=()=>{data.daily[today].harvest=$('harvest').value.trim();save();flash('harvestSaved')};
+    function showMood(){[...$('moods').children].forEach(b=>b.classList.toggle('active',b.dataset.mood===data.daily[today].mood))}
+    $('moods').onclick=e=>{if(!e.target.dataset.mood)return;data.daily[today].mood=e.target.dataset.mood;showMood();save()};
+    $('saveVent').onclick=()=>{data.daily[today].vent=$('ventText').value.trim();save();flash('ventSaved')};
+    $('clearVent').onclick=()=>{if(!confirm('确定清空今天的倾诉内容吗？'))return;data.daily[today].vent='';data.daily[today].mood='';$('ventText').value='';showMood();save();flash('ventSaved')};
     $('rating').onclick=e=>{if(!e.target.dataset.score)return;data.daily[today].score=Number(e.target.dataset.score);[...$('rating').children].forEach(b=>b.classList.toggle('active',Number(b.dataset.score)===data.daily[today].score));save()};
     $('saveReflection').onclick=()=>{data.daily[today].reflection=$('reflection').value.trim();save();flash('reflectionSaved')};
     $('tasks').onclick=e=>{const i=e.target.dataset.checkin??e.target.dataset.del;if(i===undefined)return;const item=data.tasks[today][i];if(e.target.dataset.checkin!==undefined){item.done=!item.done; if(item.done&&!data.doneDates.includes(today))data.doneDates.push(today);if(!data.tasks[today].some(x=>x.done))data.doneDates=data.doneDates.filter(d=>d!==today)}else data.tasks[today].splice(i,1);save()};
-    [...$('rating').children].forEach(b=>b.classList.toggle('active',Number(b.dataset.score)===data.daily[today].score));showCountdown();render();
+    [...$('rating').children].forEach(b=>b.classList.toggle('active',Number(b.dataset.score)===data.daily[today].score));showMood();showCountdown();render();
   </script>
 </body>
 </html>
