@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#176b57">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="self-bear.jpg">
   <title>静的逆袭之旅</title>
   <style>
     :root{font-family:system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:#18201e;background:#f3f5f4;line-height:1.5;letter-spacing:0;--green:#176b57;--red:#a82932;--line:#e1e6e3;--page:#f3f5f4;--card:#fff;--text:#18201e;--muted:#68736f}
-    *{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--text)}body[data-theme="eye"]{--page:#eef3e8;--card:#fbfdf7;--line:#d7e1d0}body[data-theme="dark"]{--page:#171b1a;--card:#242a28;--line:#3c4541;--text:#edf3f0;--muted:#aeb9b4;--green:#55b89d}body[data-theme="dark"] input,body[data-theme="dark"] textarea,body[data-theme="dark"] select{background:#1c211f;color:#edf3f0;border-color:#4a5550}body[data-theme="dark"] .growth-card,body[data-theme="dark"] .review-item,body[data-theme="dark"] .history-detail,body[data-theme="dark"] .calendar-day{background:#2c3330}body[data-theme="dark"] .pet,body[data-theme="dark"] .review-note,body[data-theme="dark"] .bear-box{background:#302d27}.app{max-width:820px;margin:auto;padding:26px 18px 48px}header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}h1,h2{font-family:"STKaiti","KaiTi","FangSong","Noto Serif CJK SC",serif}h1{font-size:34px;font-weight:700;color:#293c36;margin:0 0 3px}body[data-theme="dark"] h1{color:#edf3f0}h2{font-size:19px;font-weight:700;margin:0}p{margin:0;color:var(--muted)}.header-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.date{font-family:"FangSong","STFangsong",serif;font-size:15px;color:var(--muted);text-align:right}.theme-select{width:auto;padding:5px 8px;font-size:13px}
+    *{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--text)}body[data-theme="eye"]{--page:#eef3e8;--card:#fbfdf7;--line:#d7e1d0}body[data-theme="dark"]{--page:#171b1a;--card:#242a28;--line:#3c4541;--text:#edf3f0;--muted:#aeb9b4;--green:#55b89d}body[data-theme="dark"] input,body[data-theme="dark"] textarea,body[data-theme="dark"] select{background:#1c211f;color:#edf3f0;border-color:#4a5550}body[data-theme="dark"] .growth-card,body[data-theme="dark"] .review-item,body[data-theme="dark"] .history-detail,body[data-theme="dark"] .calendar-day{background:#2c3330}body[data-theme="dark"] .pet,body[data-theme="dark"] .review-note,body[data-theme="dark"] .bear-box{background:#302d27}.app{max-width:820px;margin:auto;padding:26px 18px 48px}header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}h1,h2{font-family:"STKaiti","KaiTi","FangSong","Noto Serif CJK SC",serif}h1{font-size:34px;font-weight:700;color:#293c36;margin:0 0 3px}body[data-theme="dark"] h1{color:#edf3f0}h2{font-size:19px;font-weight:700;margin:0}p{margin:0;color:var(--muted)}.header-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.date{font-family:"FangSong","STFangsong",serif;font-size:15px;color:var(--muted);text-align:right}.theme-select{width:auto;padding:5px 8px;font-size:13px}.install{padding:6px 10px;font-size:13px}
     .panel,.stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px}.panel{margin-bottom:16px}.panel-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
     .goal{display:grid;grid-template-columns:1.12fr .88fr;padding:0;overflow:hidden;border-left:5px solid var(--red)}.goal-copy{padding:18px}.goal h2{font-size:24px;color:#7f1d26}.hint,.privacy{font-size:13px;margin:4px 0 10px}.goal img{width:100%;height:360px;object-fit:cover;object-position:center 72%}
     .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.stat strong{display:block;font-size:24px;color:var(--green)}.stat span{font-size:13px;color:#68736f}
@@ -27,7 +32,7 @@
 </head>
 <body>
 <main class="app">
-  <header><div><h1>静的逆袭之旅</h1><p>把目标写下来，把改变做出来。</p></div><div class="header-side"><div class="date" id="today"></div><select id="themeSelect" class="theme-select" aria-label="显示模式"><option value="light">明亮模式</option><option value="eye">护眼模式</option><option value="dark">深色模式</option></select></div></header>
+  <header><div><h1>静的逆袭之旅</h1><p>把目标写下来，把改变做出来。</p></div><div class="header-side"><div class="date" id="today"></div><select id="themeSelect" class="theme-select" aria-label="显示模式"><option value="light">明亮模式</option><option value="eye">护眼模式</option><option value="dark">深色模式</option></select><button class="install" id="installApp" hidden>安装应用</button></div></header>
 
   <section class="panel goal">
     <div class="goal-copy"><h2>我的目标 · 华南理工大学</h2><p class="hint">今天最需要解决的主要矛盾是什么？</p><textarea id="focusInput" maxlength="160" placeholder="例如：数学函数基础不牢，今天集中整理并完成典型题"></textarea><div class="save-row"><span class="saved" id="focusSaved"></span><button id="saveFocus">保存目标</button></div></div>
@@ -65,7 +70,7 @@
   const KEY='study-mvp-v1', $=id=>document.getElementById(id);
   const todayKey=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`};
   let data=JSON.parse(localStorage.getItem(KEY)||'{"tasks":{},"doneDates":[]}'),today=todayKey();
-  data.tasks??={};data.tasks[today]??=[];data.doneDates??=[];data.daily??={};data.daily[today]??={};data.examDate??='';data.bearHits??={};data.bearHits[today]??=0;data.pomodoro??={};data.pomodoro[today]??={count:0,minutes:0};data.pet??={fed:0};data.theme??='light';
+  data.tasks??={};data.tasks[today]??=[];data.doneDates??=[];data.daily??={};data.daily[today]??={};data.examDate??='';data.bearHits??={};data.bearHits[today]??=0;data.pomodoro??={};data.pomodoro[today]??={count:0,minutes:0};data.pet??={fed:0};data.theme??='light';data.timer??={running:false,end:0,base:1500,remaining:1500,mode:'focus'};
   const daily=data.daily[today];daily.focus??='';daily.score??=0;daily.reflection??='';daily.harvest??='';daily.mood??='';daily.vent??='';daily.resistance??='';daily.resistancePlan??='';daily.resistanceCategory??='';
   $('today').textContent=new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
   $('focusInput').value=daily.focus;$('reflection').value=daily.reflection;$('harvest').value=daily.harvest;$('ventText').value=daily.vent;$('resistanceText').value=daily.resistance;$('resistancePlan').value=daily.resistancePlan;$('resistanceCategory').value=daily.resistanceCategory;$('examDate').value=data.examDate;document.body.dataset.theme=data.theme;$('themeSelect').value=data.theme;
@@ -111,12 +116,22 @@
   $('exportData').onclick=()=>{const payload={version:1,exportedAt:new Date().toISOString(),data},blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`静的逆袭之旅-备份-${today}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
   $('importData').onclick=()=>$('importFile').click();
   $('importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const parsed=JSON.parse(await file.text()),incoming=parsed.data||parsed;if(!incoming.tasks||!incoming.daily)throw new Error();if(!confirm('导入会覆盖当前浏览器中的网站数据，确定继续吗？'))return;localStorage.setItem(KEY,JSON.stringify(incoming));location.reload()}catch{alert('备份文件无效或已损坏。')}finally{e.target.value=''}};
-  let timerSeconds=1500,timerBase=1500,timerId=null,timerMode='focus';
+  let timerBase=data.timer.base||1500,timerSeconds=data.timer.running?Math.max(0,Math.ceil((data.timer.end-Date.now())/1000)):(data.timer.remaining||timerBase),timerId=null,timerMode=data.timer.mode||'focus';
   function drawTimer(){$('timerDisplay').textContent=`${String(Math.floor(timerSeconds/60)).padStart(2,'0')}:${String(timerSeconds%60).padStart(2,'0')}`}
-  function stopTimer(){clearInterval(timerId);timerId=null;$('timerStart').textContent='开始'}
-  [...document.querySelectorAll('.modes button')].forEach(b=>b.onclick=()=>{stopTimer();document.querySelectorAll('.modes button').forEach(x=>x.classList.remove('active'));b.classList.add('active');timerBase=timerSeconds=Number(b.dataset.minutes)*60;timerMode=b.dataset.mode;$('timerStatus').textContent=timerMode==='focus'?'准备专注':'准备休息';drawTimer()});
-  $('timerStart').onclick=()=>{if(timerId){stopTimer();$('timerStatus').textContent='已暂停';return}$('timerStart').textContent='暂停';$('timerStatus').textContent='计时中';timerId=setInterval(()=>{timerSeconds--;drawTimer();if(timerSeconds<=0){stopTimer();$('timerStatus').textContent='本轮完成';if(timerMode==='focus'){data.pomodoro[today].count++;data.pomodoro[today].minutes+=Math.round(timerBase/60);save()}alert(timerMode==='focus'?'专注完成，辛苦了！':'休息结束，准备继续吧！')}},1000)};
-  $('timerReset').onclick=()=>{stopTimer();timerSeconds=timerBase;$('timerStatus').textContent='准备开始';drawTimer()};
+  function clearTimerLoop(){clearInterval(timerId);timerId=null}
+  function persistTimer(){data.timer={running:!!data.timer.running,end:data.timer.end||0,base:timerBase,remaining:timerSeconds,mode:timerMode};localStorage.setItem(KEY,JSON.stringify(data))}
+  function finishTimer(notify=true){if(!data.timer.running)return;clearTimerLoop();data.timer.running=false;data.timer.end=0;timerSeconds=0;const key=todayKey();data.pomodoro[key]??={count:0,minutes:0};if(timerMode==='focus'){data.pomodoro[key].count++;data.pomodoro[key].minutes+=Math.round(timerBase/60)}persistTimer();$('timerStart').textContent='开始';$('timerStatus').textContent='本轮完成';drawTimer();render();if(notify)alert(timerMode==='focus'?'专注完成，辛苦了！':'休息结束，准备继续吧！')}
+  function tick(){if(!data.timer.running)return;timerSeconds=Math.max(0,Math.ceil((data.timer.end-Date.now())/1000));drawTimer();if(timerSeconds<=0)finishTimer(document.visibilityState==='visible')}
+  function pauseTimer(){tick();clearTimerLoop();data.timer.running=false;data.timer.end=0;persistTimer();$('timerStart').textContent='开始';$('timerStatus').textContent='已暂停'}
+  function startTimer(){data.timer.running=true;data.timer.end=Date.now()+timerSeconds*1000;persistTimer();$('timerStart').textContent='暂停';$('timerStatus').textContent='计时中';clearTimerLoop();timerId=setInterval(tick,1000)}
+  [...document.querySelectorAll('.modes button')].forEach(b=>b.onclick=()=>{clearTimerLoop();data.timer.running=false;document.querySelectorAll('.modes button').forEach(x=>x.classList.remove('active'));b.classList.add('active');timerBase=timerSeconds=Number(b.dataset.minutes)*60;timerMode=b.dataset.mode;data.timer.end=0;persistTimer();$('timerStart').textContent='开始';$('timerStatus').textContent=timerMode==='focus'?'准备专注':'准备休息';drawTimer()});
+  $('timerStart').onclick=()=>data.timer.running?pauseTimer():startTimer();
+  $('timerReset').onclick=()=>{clearTimerLoop();data.timer.running=false;data.timer.end=0;timerSeconds=timerBase;persistTimer();$('timerStart').textContent='开始';$('timerStatus').textContent='准备开始';drawTimer()};
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')tick()});
+  document.querySelectorAll('.modes button').forEach(b=>b.classList.toggle('active',Number(b.dataset.minutes)*60===timerBase&&b.dataset.mode===timerMode));
+  if(data.timer.running){if(timerSeconds<=0)finishTimer(false);else startTimer()}
+  let installPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installApp').hidden=false});$('installApp').onclick=async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installApp').hidden=true};window.addEventListener('appinstalled',()=>{$('installApp').hidden=true});
+  if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./service-worker.js');
   showCountdown();drawTimer();render();
 </script>
 </body>

@@ -1,0 +1,20 @@
+{
+  "name": "静的逆袭之旅",
+  "short_name": "逆袭之旅",
+  "description": "自律学习、打卡、复盘与成长记录",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f3f5f4",
+  "theme_color": "#176b57",
+  "icons": [
+    {
+      "src": "self-bear.jpg",
+      "sizes": "1080x1080",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
